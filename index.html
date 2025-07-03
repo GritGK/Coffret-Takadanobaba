@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コフレ高田馬場 - Coffret Takadanobaba</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&family=Montserrat:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #f0f2f5; /* Light gray background */
+            --text-color: #2c3e50; /* Dark blue-gray for text */
+            --primary-color: #3498db; /* Cool blue for primary elements */
+            --card-bg-color: #ffffff;
+            --section-bg-color: #e9ecef; /* Slightly darker gray for alternate sections */
+            --header-text-light: #ffffff;
+            --header-text-dark: #2c3e50;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(0,0,0,0.3);
+            color: var(--header-text-light);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        
+        header.scrolled {
+            background: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        header.scrolled .logo {
+            color: var(--primary-color);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--header-text-light);
+            transition: color 0.3s;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--header-text-light);
+            text-decoration: none;
+            font-weight: 400;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        header.scrolled .nav-links a {
+            color: var(--header-text-dark);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hero {
+            height: 100vh;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            font-weight: 300;
+            color: #6c757d;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg-color);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+
+        .card h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        #gallery .grid {
+             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+        
+        #gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        #gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        #outline table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #outline th, #outline td {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+            text-align: left;
+        }
+
+        #outline th {
+            background-color: var(--section-bg-color);
+            width: 30%;
+        }
+
+        .room-type {
+            background: var(--card-bg-color);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+            border: 1px solid #eee;
+        }
+
+        .room-type h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.8rem;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .room-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .room-gallery img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .room-gallery img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Lightbox styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        #gallery img, .room-gallery img {
+            cursor: pointer;
+        }
+
+        .madori-img {
+            object-fit: contain !important;
+            background-color: #f8f9fa;
+        }
+        
+        .location-item {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: center;
+        }
+        .location-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .location-text {
+            flex: 1;
+        }
+        .location-text h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .location-img {
+            flex: 1;
+            max-width: 50%;
+        }
+        .location-img img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .access-item {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 40px;
+            align-items: center;
+            padding: 30px;
+            border-radius: 8px;
+        }
+
+        .access-text {
+            flex: 1;
+        }
+        .access-text h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .access-img {
+            flex: 1;
+            max-width: 50%;
+        }
+        .access-img img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .access-times-container {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 20px;
+            background: var(--section-bg-color);
+            border-radius: 8px;
+        }
+        .access-times-container h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .access-times-container table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        .access-times-container th, .access-times-container td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+        }
+        .access-times-container th {
+            background: #e9ecef;
+        }
+        .access-times-container .station {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .access-route-maps img {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+
+        footer {
+            background: #343a40;
+            color: #f8f9fa;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .nav-links { display: none; }
+            .location-item, .location-item:nth-child(even), .access-item {
+                flex-direction: column;
+            }
+            .location-img, .access-img {
+                max-width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <nav class="container">
+            <div class="logo">Coffret Takadanobaba</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#access">Access</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#rooms">Rooms</a></li>
+                
+                <li><a href="#outline">Outline</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="hero" style="background-image: url('../../0_保有物件/コフレ高田馬場/写真及び間取り図/外観/LINE_ALBUM_コフレ高田馬場　外観_250518_8.jpg');">
+        <div class="hero-content">
+            <h1>コフレ高田馬場</h1>
+            <p>知性と活気が交差する街、高田馬場で、新しい都市生活を。</p>
+        </div>
+    </section>
+
+    <main>
+        <section id="about">
+            <div class="container">
+                <h2 class="section-title">About</h2>
+                <p class="section-subtitle">物件の魅力</p>
+                <div class="grid">
+                    <div class="card">
+                        <h3>洗練されたデザイン</h3>
+                        <p>モダンでスタイリッシュな外観と、細部にまでこだわった内装。都市生活に求められる機能性と、心地よさを両立した住空間を提供します。</p>
+                    </div>
+                    <div class="card">
+                        <h3>高田馬場の利便性</h3>
+                        <p>JR山手線、西武新宿線、東京メトロ東西線の3路線が利用可能。都心の主要エリアへダイレクトにアクセスでき、通勤・通学に非常に便利です。</p>
+                    </div>
+                    <div class="card">
+                        <h3>充実した周辺環境</h3>
+                        <p>駅周辺には商業施設や飲食店が豊富に揃い、日々の生活をサポート。また、緑豊かな公園も近くにあり、都会の喧騒を忘れさせてくれる癒やしの空間も享受できます。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="location" style="background: var(--section-bg-color);">
+            <div class="container">
+                <h2 class="section-title">Location</h2>
+                <p class="section-subtitle">多様な文化が融合する、エネルギッシュな街「高田馬場」。</p>
+                <div class="location-item">
+                    <div class="location-text">
+                        <h3>活気あふれる学生街</h3>
+                        <p>早稲田大学をはじめとする多くの学校が集まる高田馬場は、若々しいエネルギーに満ちています。リーズナブルな飲食店や書店、カフェなどが軒を連ね、常に新しい発見がある街です。</p>
+                    </div>
+                    <div class="location-img">
+                        <img src="image/さかえ通り.jpg" alt="高田馬場の街並み">
+                    </div>
+                </div>
+                <div class="location-item">
+                    <div class="location-text">
+                        <h3>文化と歴史の探訪</h3>
+                        <p>少し足を伸ばせば、歴史ある寺社や文化施設が点在。伝統とモダンが共存するこのエリアは、散策するだけでも楽しめます。</p>
+                    </div>
+                    <div class="location-img">
+                        <img src="image/諏訪神社.jpg" alt="歴史的な建造物">
+                    </div>
+                </div>
+                <div class="location-item">
+                    <div class="location-text">
+                        <h3>「食」と「発見」の宝庫。</h3>
+                        <p>世界各国の料理が楽しめる多様な飲食店から、隠れた名店、個性的なショップまで。高田馬場は、日々の暮らしに彩りと驚きをもたらす「発見」に満ちています。食の探求者も、新しい趣味を見つけたい方も、この街ならきっと満足できるでしょう。</p>
+                    </div>
+                    <div class="location-img">
+                        <img src="image/食材ショップ.jpg" alt="高田馬場の食と発見のイメージ">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="access">
+            <div class="container">
+                <h2 class="section-title">Access</h2>
+                <p class="section-subtitle">JR山手線「高田馬場」駅徒歩11分、西武新宿線「下落合」駅徒歩4分。</p>
+                <div class="access-item">
+                    <div class="access-img">
+                        <img src="image/広域路線図.png" alt="路線図">
+                    </div>
+                    <div class="access-text">
+                        <h3>2駅3路線利用可能。</h3>
+                        <p>JR山手線・東京メトロ東西線・西武新宿線を自在に使いこなせ、快適な通勤や通学が叶います。</p>
+                    </div>
+                </div>
+                <div class="access-times-container">
+                    <h3>主要駅への所要時間</h3>
+                    <table>
+                        <tr>
+                            <th>目的地</th>
+                            <th>所要時間</th>
+                            <th>利用路線</th>
+                        </tr>
+                        <tr>
+                            <td class="station">新宿</td>
+                            <td>約5分</td>
+                            <td>JR山手線</td>
+                        </tr>
+                        <tr>
+                            <td class="station">渋谷</td>
+                            <td>約11分</td>
+                            <td>JR山手線</td>
+                        </tr>
+                        <tr>
+                            <td class="station">池袋</td>
+                            <td>約4分</td>
+                            <td>JR山手線</td>
+                        </tr>
+                         <tr>
+                            <td class="station">大手町</td>
+                            <td>約14分</td>
+                            <td>東京メトロ東西線</td>
+                        </tr>
+                    </table>
+                    <small>※所要時間は日中平常時のものであり、時間帯により異なります。乗り換え、待ち時間は含まれません。</small>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" style="background: var(--section-bg-color);">
+            <div class="container">
+                <h2 class="section-title">Gallery</h2>
+                <p class="section-subtitle">洗練された共用空間。オートロック、防犯カメラ、宅配ボックスを設置し、快適で安全な暮らしをサポートします。</p>
+                <div class="grid">
+                    <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/外観/LINE_ALBUM_コフレ高田馬場　外観_250518_4.jpg" alt="外観">
+                    <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/外観/LINE_ALBUM_コフレ高田馬場　外観_250518_3.jpg" alt="外観">
+                    <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/外観/LINE_ALBUM_コフレ高田馬場　外観_250518_5.jpg" alt="外観">
+                    <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/外観/LINE_ALBUM_コフレ高田馬場　外観_250518_1.jpg" alt="外観">
+                </div>
+            </div>
+        </section>
+
+        <section id="rooms">
+            <div class="container">
+                <h2 class="section-title">Rooms</h2>
+                <p class="section-subtitle">多様なライフスタイルに応えるルームプラン</p>
+
+                <div class="room-type">
+                    <h3>1LDK Type (メゾネット)</h3>
+                    <p><strong>専有面積:</strong> 46.8㎡<br>
+                    上下階に広がる、戸建て感覚のメゾネットタイプ。開放的な空間設計が、都心にいることを忘れさせるほどの、ゆとりとプライベート感をもたらします。</p>
+                    <div class="room-gallery">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/101/LINE_ALBUM_コフレ高田馬場　101_250518_3.jpg" alt="1LDK 居室">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/101/LINE_ALBUM_コフレ高田馬場　101_250518_10.jpg" alt="1LDK キッチン">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/101/LINE_ALBUM_コフレ高田馬場　101_250518_8.jpg" alt="1LDK バスルーム">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/101/LINE_ALBUM_コフレ高田馬場　101_250518_17.jpg" alt="1LDK 収納">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/101/LINE_ALBUM_コフレ高田馬場　101_250518_15.jpg" alt="1LDK 収納">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/間取り図/101 間取.jpg" alt="1LDK 間取り図" class="madori-img">
+                    </div>
+                </div>
+
+                <div class="room-type">
+                    <h3>1R Type</h3>
+                    <p><strong>専有面積:</strong> 22.2㎡<br>
+                    機能性とデザイン性を両立した、スマートなワンルーム。都心でアクティブに過ごすあなたのための、コンパクトで快適なプライベート空間です。</p>
+                    <div class="room-gallery">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/401/LINE_ALBUM_コフレ高田馬場401_250518_4.jpg" alt="1R 居室">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/401/LINE_ALBUM_コフレ高田馬場401_250518_16.jpg" alt="1R 居室">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/401/LINE_ALBUM_コフレ高田馬場401_250518_7.jpg" alt="1R キッチン">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/401/LINE_ALBUM_コフレ高田馬場401_250518_14.jpg" alt="1R バスルーム">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/401/LINE_ALBUM_コフレ高田馬場401_250518_11.jpg" alt="1R 収納">
+                        <img src="../../0_保有物件/コフレ高田馬場/写真及び間取り図/間取り図/201 間取.jpg" alt="1R 間取り図" class="madori-img">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        
+
+        <section id="outline">
+            <div class="container">
+                <h2 class="section-title">Outline</h2>
+                <p class="section-subtitle">物件概要</p>
+                <table>
+                    <tr><th>所在地</th><td>東京都新宿区下落合1丁目11-1</td></tr>
+                    <tr><th>交通</th><td>JR山手線・西武新宿線・東京メトロ東西線「高田馬場」駅 徒歩11分、西武新宿線「下落合」駅徒歩4分</td></tr>
+                    <tr><th>構造</th><td>鉄筋コンクリート造 地下1階地上4階建</td></tr>
+                    <tr><th>築年月</th><td>2025年5月</td></tr>
+                    <tr><th>総戸数</th><td>8戸</td></tr>
+                    <tr><th>所有者</th><td>合同会社Grit</td></tr>
+                    <tr><th>管理会社</th><td><a href="https://www.homes.co.jp/realtor/mid-154971hB6S8hO30Ojs/" target="_blank" rel="noopener noreferrer">Mugen Home株式会社</a></td></tr>
+                    
+                </table>
+            </div>
+        </section>
+
+        <section id="contact" style="background: var(--section-bg-color);">
+            <div class="container" style="text-align: center;">
+                <h2 class="section-title">Contact</h2>
+                <p>内覧のご希望、資料請求、その他お問い合わせは管理会社の<a href="https://www.homes.co.jp/realtor/mid-154971hB6S8hO30Ojs/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color);">Mugen Home株式会社</a>、<br>または下記メールアドレスまでご連絡ください。</p>
+                <p style="font-size: 1.5rem; color: var(--primary-color); font-weight: bold;">Email: ezypt1986@gmail.com</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Coffret Takadanobaba. All Rights Reserved.</p>
+        </div>
+    </footer>
+    
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script>
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.lightbox-close');
+
+        document.querySelectorAll('#gallery img, .room-gallery img').forEach(image => {
+            image.addEventListener('click', e => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = e.target.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', e => {
+            if (e.target !== lightboxImg) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
